@@ -59,6 +59,7 @@ $rii = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($qt_folder_p
         if (!file_exists($qt_folder_path_to.$dirNameToCreate)) {
            if(! mkdir($qt_folder_path_to.$dirNameToCreate, 0755, true)){
                echo "ERROR in mkdir: ". $qt_folder_path_to.$dirNameToCreate. "<br/>";
+               exit(0);
            }
         }
         
@@ -68,10 +69,16 @@ $rii = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($qt_folder_p
             $filefromcopyPath = $imghd_dir_path. str_replace("%20", " ", $imagePath);
             
             $filetocopyPath = $qt_folder_path_to.$dirNameToCreate.DIRECTORY_SEPARATOR. str_replace("%20", " ", str_replace("/", "_", $imagePath));
-            
-            if (!copy($filefromcopyPath, $filetocopyPath)) {
-                echo "ERROR in copy file  ". $filefromcopyPath ." in ". $filetocopyPath . "<br/>";
-            }
+            try{
+                if (!copy($filefromcopyPath, $filetocopyPath)) {
+                    echo "ERROR in copy file  ". $filefromcopyPath ." in ". $filetocopyPath . "<br/>";
+                    exit(0);
+                }
+            } catch (Exception $e) {
+        		
+        	    echo 'Errore nella copia: ' .  $e->getMessage();
+        	    exit(0);
+        	}
             $copy_counter = $copy_counter+1;
             
         }
@@ -81,6 +88,7 @@ $rii = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($qt_folder_p
         $qt_file_path_to = $qt_folder_path_to.$dirNameToCreate.DIRECTORY_SEPARATOR.preg_replace('/[[:^print:]]/', '',$fileinfo->getFilename());
         if(!rename($qt_file_full_path, $qt_file_path_to)){
             echo "ERROR move file ".$qt_file_full_path. " to " . $qt_file_path_to;
+            exit(0);
         }
         
         echo "<br/>";

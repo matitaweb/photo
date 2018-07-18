@@ -33,8 +33,7 @@ $(document).ready(function () {
         list_element +='  <span class="item">';
         list_element +='    <span class="item-left">';
         list_element +='      <a href="#" target="_blank" data-featherlight="'+item.src+'"><img src="'+item.src+'"  height="60" width="60" alt="'+item.title+'" /></a>';
-        list_element +='      <span class="item-info"> '+item.customData.albumname+'</span><br/>';
-        list_element +='      <span class="item-info">'+item.title+'</span>';
+        list_element +='      <span class="item-info"><i class="album_tag" >ALBUM ' + item.customData.albumname + ':</i><br/>' + item.title + '</span>';
         list_element +='    </span>';
         list_element +='    <span class="item-right"><button type="button" class="btn btn-default btn-circle" data-idx="'+basket[j].idx+'" data-id="'+item.GetID()+'"  ><i class="fa fa-trash-o" aria-hidden="true"></i></button></span>';
         list_element +='  </span>';

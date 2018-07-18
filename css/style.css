@@ -48,7 +48,9 @@ ul.dropdown-cart li .item-left span.item-info{
     max-width: 175px;
     word-wrap: break-word;
     word-break: break-all;   
-    /*font-size: 11px;*/
+}
+.album_tag {
+    font-size: 11px;
 }
 ul.dropdown-cart li .item-left span.item-info span{
     display:block;
