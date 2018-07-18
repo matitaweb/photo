@@ -103,14 +103,15 @@ foreach ($albumList as $album) :
     $album_counter = $image_counter;
     
     // first album row
-    $album_row = '<a href="" data-ngkind="album" data-ngid="'.$image_counter.'" data-ngthumb="'.$filelist[0]['filepath'].'" data-ngdesc="" data-ngcustomData=\'{ "incart": false, "idx":'.$image_counter.'}\'  >ALBUM: '.$album['name'].'</a>';
+    $album_name = $album['name'];
+    $album_row = '<a href="" data-ngkind="album" data-ngid="'.$image_counter.'" data-ngthumb="'.$filelist[0]['filepath'].'" data-ngdesc="" data-ngcustomData=\'{ "incart": false, "idx":'.$image_counter.', "albumname":"'.$album_name.'"'.'}\'  >ALBUM: '.$album_name.'</a>';
     fwrite($fh, $album_row.PHP_EOL);
     
     // add all rows
     $image_album_counter = 0;
     foreach ($filelist as $fileElem) :
         $image_counter = $image_counter + 1;
-        $image_row = '<a id="img_'.$image_counter.'" href="'.$fileElem['filepath'].'" data-ngalbumid="'.$album_counter.'"  data-ngid="'.$image_counter.'" data-ngthumb="'.$fileElem['filepath'].'" data-ngdesc="" data-ngcustomData=\'{ "incart": false, "idx":'.$image_counter.'}\'  >'.$fileElem['filename'].'</a>';
+        $image_row = '<a id="img_'.$image_counter.'" href="'.$fileElem['filepath'].'" data-ngalbumid="'.$album_counter.'"  data-ngid="'.$image_counter.'" data-ngthumb="'.$fileElem['filepath'].'" data-ngdesc="" data-ngcustomData=\'{ "incart": false, "idx":'.$image_counter.', "albumname":"'.$album_name.'"'.'}\'  >'.$fileElem['filename'].'</a>';
         fwrite($fh, $image_row.PHP_EOL);    
         $image_album_counter = $image_album_counter+1;
     endforeach;
