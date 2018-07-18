@@ -1,0 +1,4 @@
+<a href="" data-ngkind="album" data-ngid="1" data-ngthumb="img/first/yellowstone-national-park-1589616.jpg" data-ngdesc="" data-ngcustomData='{ "incart": false, "idx":1}'  >ALBUM: first</a>
+<a id="img_2" href="img/first/yellowstone-national-park-1589616.jpg" data-ngalbumid="1"  data-ngid="2" data-ngthumb="img/first/yellowstone-national-park-1589616.jpg" data-ngdesc="" data-ngcustomData='{ "incart": false, "idx":2}'  >yellowstone-national-park-1589616</a>
+<a href="" data-ngkind="album" data-ngid="3" data-ngthumb="img/second/scotland-1973545.jpg" data-ngdesc="" data-ngcustomData='{ "incart": false, "idx":3}'  >ALBUM: second</a>
+<a id="img_4" href="img/second/scotland-1973545.jpg" data-ngalbumid="3"  data-ngid="4" data-ngthumb="img/second/scotland-1973545.jpg" data-ngdesc="" data-ngcustomData='{ "incart": false, "idx":4}'  >scotland-1973545</a>
