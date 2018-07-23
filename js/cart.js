@@ -234,7 +234,7 @@ $(document).ready(function () {
         list_element +='</div>';
         list_element +='<div class="modal-body">';
         list_element +='<p>Richiesta di <B>'+imagePathList.length+'</B> foto completata</p>';
-        list_element +='<p class="text-info">Controlla nella posta per verifica se se è arrivata la ricevuta della richiesta</p>';
+        list_element +='<p class="text-info">Controlla nei prossimi 10 minuti al tuo indirizzo email ('+email+') per verifica se se è arrivata la ricevuta della richiesta...</p>';
         list_element +='</div>';
         list_element +='<div class="modal-footer">';
         list_element +='    <a href="." class="btn btn-info" role="button">Reinizia da capo!</a>';

@@ -9,14 +9,14 @@
 	
 	//error_reporting(E_ALL);
 	
-	function sendMailAruba($to_par, $subject_par, $sender_par, $html_msg_par){
+	function sendMailAruba($to, $subject, $sender, $html_msg_par){
 		
 		// Genera un boundary
 		$mail_boundary = "=_NextPart_" . md5(uniqid(time()));
 		 
-		$to = "mattia.chiarini82@gmail.com";
-		$subject = "Testing e-mail";
-		$sender = "postmaster@artedanzabologna.com";
+		//$to = "mattia.chiarini82@gmail.com";
+		//$subject = "Testing e-mail";
+		//$sender = "postmaster@artedanzabologna.com";
 		
 		 
 		$headers = "From: $sender\n";
@@ -52,15 +52,7 @@
 		//ini_set("sendmail_from", $sender);
 		 
 		// Invia il messaggio, il quinto parametro "-f$sender" imposta il Return-Path su hosting Linux
-		if (mail($to, $subject, $msg, $headers, "-f$sender")) { 
-		    //echo "Mail inviata correttamente !<br><br>Questo di seguito � il codice sorgente usato per l'invio della mail:<br><br>";
-		    //highlight_file($_SERVER["SCRIPT_FILENAME"]);
-		    //unlink($_SERVER["SCRIPT_FILENAME"]);
-		    return true;
-		} else { 
-		    //echo "<br><br>Recapito e-Mail fallito!";
-		    return false;
-		}
+		return mail($to, $subject, $msg, $headers, "-f$sender");
 		
 	}
 	
@@ -110,10 +102,8 @@
 	      'error'=>''
 	   );
 
-	
 	$template_file_name_mail_body_info = $config_ini_array['template_file_name_mail_body_info'];
 	$template = file_get_contents($upper_dir.$template_dir_name.DIRECTORY_SEPARATOR.$template_file_name_mail_body_info);
-	
 	
 	$imagePathListHtml = "<ul>";
 	foreach( $_POST['imagePathList'] as  $imagePathListEl){
@@ -132,43 +122,33 @@
 	      'tot_photo'=>count($_POST['imagePathList']),
 	      'insertDate'=>date("Y-m-d H:i:s"),
 	      'imagePathListHtml'=> $imagePathListHtml,
-	      'error'=>''
+	      'receivername'=>$config_ini_array["receiver_name"]
 	   );
 	$email_body = replace_tags($template, $placeholders);
 	
 	// send to photo manager
-	$to = $config_ini_array['receiver_email'];
-	$email_subject = "Request from: ". $_POST['name'];
-	$headers = "From: " . $_POST['email'] . "\n"; // This is the email address the generated message will be from. We recommend using something like noreply@yourdomain.com.
-	$headers .= "Reply-To: ".$_POST['email'];
-	
-	
-	
+	$email_subject = replace_tags($config_ini_array["receiver_email_subject"], $placeholders);
 	try {
 		$filePathMail = $upper_dir . $request_dir_name. DIRECTORY_SEPARATOR .'mail.html';
 		writeFile($filePathMail, $email_body, $formdata);
-		sendMailAruba($to,$email_subject, $_POST['email'], $email_body);
-		/*if(mail($to,$email_subject,$email_body,$headers)){
-			$formdata['status']=0;
-	    	$formdata['error'].='Error sending mail 1';	
-		}*/
+		if(!sendMailAruba($config_ini_array['receiver_email'], $email_subject, $_POST['email'], $email_body)){
+			$formdata['status']=0;	
+			$formdata['error'].='Error sending mail to' .  $config_ini_array['receiver_email'];
+		}
 	} catch (Exception $e) {
 		$formdata['status']=0;
 	    $formdata['error'].='Caught exception: ' .  $e->getMessage();
 	}
 	
 	// send recap to mail client
-	$headers = "From: " . $config_ini_array['receiver_email'] . "\n"; // This is the email address the generated message will be from. We recommend using something like noreply@yourdomain.com.
-	$headers .= "Reply-To: " . $config_ini_array['receiver_email']."\n";
-	$email_body = "You have received a new message from your website contact form.\n\n";
-	$email_subject = "Request  photo to : " . $config_ini_array["$config_ini_array"] . " for ". $_POST['name'];
+	//$email_body = "You have received a new message from your website contact form.\n\n";
+	$email_subject = replace_tags($config_ini_array["sender_email_subject"], $placeholders);
 	try {
-		sendMailAruba($to,$email_subject, $_POST['email'], $email_body);
-		/*
-		if(!mail($_POST['email'],$email_subject,$email_body,$headers)){
-			$formdata['status']=0;
-	    	$formdata['error'].='Error sending mail 2';
-		}*/
+		if(!sendMailAruba($_POST['email'],$email_subject, $config_ini_array['receiver_email'], $email_body)){
+			$formdata['status']=0;	
+			$formdata['error'].='Error sending mail to' .  $_POST['email'];
+		}
+
 	} catch (Exception $e) {
 		$formdata['status']=0;
 	    $formdata['error'].='Caught exception: ' .  $e->getMessage();
