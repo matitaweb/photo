@@ -65,7 +65,8 @@ $rii = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($qt_folder_p
         
 
         $copy_counter = 0;
-        foreach($json_a['imagePathList'] as $imagePath) {
+        foreach($json_a['imagePathList'] as $imagePathEl) {
+            $imagePath = $imagePathEl['path'];
             $filefromcopyPath = $imghd_dir_path. str_replace("%20", " ", $imagePath);
             
             $filetocopyPath = $qt_folder_path_to.$dirNameToCreate.DIRECTORY_SEPARATOR. str_replace("%20", " ", str_replace("/", "_", $imagePath));

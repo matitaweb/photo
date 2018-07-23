@@ -32,7 +32,7 @@ $(document).ready(function () {
         list_element +='<li>';
         list_element +='  <span class="item">';
         list_element +='    <span class="item-left">';
-        list_element +='      <a href="#" target="_blank" data-featherlight="'+item.src+'"><img src="'+item.src+'"  height="60" width="60" alt="'+item.title+'" /></a>';
+        list_element +='      <a href="#" target="_blank" data-featherlight="'+item.src+'"><img src="'+item.src+'"  height="60" width="60" alt="'+item.title+'" data-album="'+item.customData.albumname+'"data-imagetitle="'+item.title+'"  /></a>';
         list_element +='      <span class="item-info"><i class="album_tag" >ALBUM ' + item.customData.albumname + ':</i><br/>' + item.title + '</span>';
         list_element +='    </span>';
         list_element +='    <span class="item-right"><button type="button" class="btn btn-default btn-circle" data-idx="'+basket[j].idx+'" data-id="'+item.GetID()+'"  ><i class="fa fa-trash-o" aria-hidden="true"></i></button></span>';
@@ -201,10 +201,20 @@ $(document).ready(function () {
     var $form = $( this );
     var email = $form.find( "input[name='email']" ).val().trim();
     var name = $form.find( "input[name='name']" ).val().trim();
-    var imagePathList = $('ul#photocartlist li img').map(function() { return this.src; }).get();
-    imagePathList = imagePathList.map(function(e){
+    var imagePathList = $('ul#photocartlist li img').map(function() { 
+      
+      var imagePathListElem = {};
+      imagePathListElem.album = this.dataset.album;
+      imagePathListElem.imagetitle = this.dataset.imagetitle;
+      imagePathListElem.path= this.src.replace(window.location.origin+window.location.pathname,"");
+      return imagePathListElem; 
+      
+    }).get();
+    /*imagePathList = imagePathList.map(function(e){
+      
       return e.replace(window.location.origin+window.location.pathname,"");
-    });
+    });*/
+    
     var url = $form.attr( "action" );
     $('#requestphoto').button('loading');
    
