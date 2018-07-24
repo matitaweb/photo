@@ -9,15 +9,10 @@
 	
 	//error_reporting(E_ALL);
 	
-	function sendMailAruba($to, $subject, $sender, $html_msg_par){
+	function sendMailAruba($to, $subject, $sender, $html_msg){
 		
 		// Genera un boundary
 		$mail_boundary = "=_NextPart_" . md5(uniqid(time()));
-		 
-		//$to = "mattia.chiarini82@gmail.com";
-		//$subject = "Testing e-mail";
-		//$sender = "postmaster@artedanzabologna.com";
-		
 		 
 		$headers = "From: $sender\n";
 		$headers .= "Reply-To: " . $sender."\n";
@@ -26,28 +21,28 @@
 		$headers .= "X-Mailer: PHP " . phpversion();
 		 
 		// Corpi del messaggio nei due formati testo e HTML
-		$text_msg = "messaggio in formato testo";
-		$html_msg = "<b>messaggio</b> in formato <p><a href='http://www.aruba.it'>html</a><br><img src=\"http://hosting.aruba.it/image_top/top_01.gif\" border=\"0\"></p>";
+		//$text_msg = "messaggio in formato testo";
+		/*$html_msg = "<b>messaggio</b> in formato <p><a href='http://www.aruba.it'>html</a><br><img src=\"http://hosting.aruba.it/image_top/top_01.gif\" border=\"0\"></p>";*/
 		 
 		// Costruisci il corpo del messaggio da inviare
 		$msg = "This is a multi-part message in MIME format.\n\n";
 		$msg .= "--$mail_boundary\n";
 		$msg .= "Content-Type: text/plain; charset=\"iso-8859-1\"\n";
 		$msg .= "Content-Transfer-Encoding: 8bit\n\n";
-		$msg .= "Questa &egrave; una e-Mail di test inviata dal servizio Hosting di Aruba.it per la verifica del corretto funzionamento di PHP mail()function .
-		
-		Aruba.it";  // aggiungi il messaggio in formato text
+		$msg .= " ";  // aggiungi il messaggio in formato text
 		 
 		$msg .= "\n--$mail_boundary\n";
 		$msg .= "Content-Type: text/html; charset=\"iso-8859-1\"\n";
 		$msg .= "Content-Transfer-Encoding: 8bit\n\n";
-		$msg .= "Questa &egrave; una e-Mail di test inviata dal servizio Hosting di Aruba.it per la verifica del corretto funzionamento di PHP mail()function .
 		
-		Aruba.it";  // aggiungi il messaggio in formato HTML
-		 
+		$msg .= "\n";  // aggiungi il messaggio in formato HTML
+
+		$msg .= $html_msg;
+		
 		// Boundary di terminazione multipart/alternative
 		$msg .= "\n--$mail_boundary--\n";
-		 
+		
+
 		// Imposta il Return-Path (funziona solo su hosting Windows)
 		//ini_set("sendmail_from", $sender);
 		 
@@ -76,7 +71,6 @@
 		
 	}
 	
-	
 	function replace_tags($template, $placeholders){
 		
 		foreach($placeholders as $key => $value){
@@ -92,7 +86,7 @@
 	
 	
 	
-	// parsing data from form
+	// parsing form data
 	$formdata = array(
 	      'name'=> $_POST['name'],
 	      'email'=>$_POST['email'],
@@ -105,11 +99,12 @@
 	$template_file_name_mail_body_info = $config_ini_array['template_file_name_mail_body_info'];
 	$template = file_get_contents($upper_dir.$template_dir_name.DIRECTORY_SEPARATOR.$template_file_name_mail_body_info);
 	
-	$imagePathListHtml = "<ul>";
+	$imagePathListHtml = "<ul style='list-style-type: none;width: 500px;'>";
 	foreach( $_POST['imagePathList'] as  $imagePathListEl){
-    	$imagePathListHtml .= '<li>';
-    	$imagePathListHtml .= '<img src="https://gallery-selectable-matitaweb.c9users.io/photo/'.$imagePathListEl['path'].'" height="60" width="60" alt="'.$imagePathListEl['imagetitle'].'" />';
-    	$imagePathListHtml .= '<h3>ALBUM '.$imagePathListEl['album'].':</h3><p>FOTO: '.$imagePathListEl['imagetitle'].' </p>';
+    	$imagePathListHtml .= '<li style="padding: 10px;overflow: auto;" >';
+    	$imagePathListHtml .= '<img style="float: left;margin: 0 15px 0 0;" src="'.$_SERVER['HTTP_REFERER'].$imagePathListEl['path'].'" height="60" width="60" alt="'.$imagePathListEl['imagetitle'].'" />';
+    	$imagePathListHtml .= '<h3 style="font: 15px/1.5 Helvetica, Verdana, sans-serif;margin-top: 3px;padding:0px" >ALBUM: '.$imagePathListEl['album'].'</h3>';
+    	$imagePathListHtml .= '<p style="font: 200 12px/1.5 Georgia, Times New Roman, serif;margin-top: 2px;padding:0px" >FOTO: '.$imagePathListEl['imagetitle'].' </p>';
     	$imagePathListHtml .= '</li>';		
 	}
 	$imagePathListHtml .= "</ul>";
@@ -129,8 +124,8 @@
 	// send to photo manager
 	$email_subject = replace_tags($config_ini_array["receiver_email_subject"], $placeholders);
 	try {
-		$filePathMail = $upper_dir . $request_dir_name. DIRECTORY_SEPARATOR .'mail.html';
-		writeFile($filePathMail, $email_body, $formdata);
+		//$filePathMail = $upper_dir . $request_dir_name. DIRECTORY_SEPARATOR .'mail.html';
+		//writeFile($filePathMail, $email_body, $formdata);
 		if(!sendMailAruba($config_ini_array['receiver_email'], $email_subject, $_POST['email'], $email_body)){
 			$formdata['status']=0;	
 			$formdata['error'].='Error sending mail to' .  $config_ini_array['receiver_email'];
