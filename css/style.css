@@ -65,6 +65,11 @@ ul.dropdown-cart li .item-right button{
 .selected-photo {
     border: 5px solid yellow !important;
 }
+.selected-photo-innercolour {
+    background-color:rgba(255, 255, 0, 0.4) !important;
+    width: 100% !important;
+    height: 100% !important;
+}
 
 .btn-circle {
   width: 30px;

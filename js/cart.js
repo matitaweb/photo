@@ -82,8 +82,10 @@ $(document).ready(function () {
     item.$elt.find('[data-ngy2action="CART"]').css('color',c);
     if(item.customData.incart){
       item.$elt.addClass("selected-photo");
+      item.$elt.find('.nGY2GThumbnailIconsFullThumbnail').addClass('selected-photo-innercolour');
     } else {
       item.$elt.removeClass("selected-photo");
+      item.$elt.find('.nGY2GThumbnailIconsFullThumbnail').removeClass('selected-photo-innercolour');
     }
   }
 
