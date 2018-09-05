@@ -240,7 +240,7 @@ $(document).ready(function () {
         list_element +='<p class="text-info"><b>Attenzione:</b> alcune volte la mail va nello <b>SPAM</b>!</p>';
         list_element +='</div>';
         list_element +='<div class="modal-footer">';
-        list_element +='    <a href="." class="btn btn-info" role="button">Reinizia da capo!</a>';
+        list_element +='    <a href="." class="btn btn-info" role="button">Inizia da capo!</a>';
         list_element +='</div>';
         list_element +='</div>';
         list_element +='</div>';
@@ -302,6 +302,9 @@ $(document).ready(function () {
         return false;
     };
 
+  $('body').on('contextmenu', function (evt) {
+    evt.preventDefault();
+  });
 
 });
   
