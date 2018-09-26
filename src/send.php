@@ -105,8 +105,11 @@
 	
 	$imagePathListHtml = "<ul style='list-style-type: none;width: 500px;'>";
 	foreach( $imagePathList as  $imagePathListEl){
+		$img_url = $_SERVER['HTTP_REFERER'].$imagePathListEl['path'];
     	$imagePathListHtml .= '<li style="padding: 10px;overflow: auto;" >';
-    	$imagePathListHtml .= '<img style="float: left;margin: 0 15px 0 0;" src="'.$_SERVER['HTTP_REFERER'].$imagePathListEl['path'].'" height="60" width="60" alt="'.$imagePathListEl['imagetitle'].'" />';
+    	$imagePathListHtml .= '<a target="_blank" href="'.$img_url.'">';
+    	$imagePathListHtml .= '<img style="float: left;margin: 0 15px 0 0;" src="'.$img_url.'" height="60" width="60" alt="'.$imagePathListEl['imagetitle'].'" />';
+    	$imagePathListHtml .= '</a>';
     	$imagePathListHtml .= '<h3 style="font: 15px/1.5 Helvetica, Verdana, sans-serif;margin-top: 3px;padding:0px" >ALBUM: '.$imagePathListEl['album'].'</h3>';
     	$imagePathListHtml .= '<p style="font: 200 12px/1.5 Georgia, Times New Roman, serif;margin-top: 2px;padding:0px" >FOTO: '.$imagePathListEl['imagetitle'].' </p>';
     	$imagePathListHtml .= '</li>';		
