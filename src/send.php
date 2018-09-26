@@ -84,13 +84,17 @@
 	$template_dir_name = 'templates';
 	$upper_dir = str_replace(DIRECTORY_SEPARATOR."src".DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR."", dirname(realpath( __FILE__ )).DIRECTORY_SEPARATOR);
 	
+	$imagePathList = $_POST['imagePathList'];
+	foreach( $_POST['imagePathList'] as  $imagePathListEl){
+		$imagePathListEl['path'] = str_replace($_SERVER['HTTP_REFERER'],"", $imagePathListEl['path']);
+	}
 	
 	
 	// parsing form data
 	$formdata = array(
 	      'name'=> $_POST['name'],
 	      'email'=>$_POST['email'],
-	      'imagePathList'=> $_POST['imagePathList'],
+	      'imagePathList'=> $imagePathList,
 	      'insertDate'=>date("Y-m-d H:i:s"),
 	      'status'=>1,
 	      'error'=>''
@@ -100,7 +104,7 @@
 	$template = file_get_contents($upper_dir.$template_dir_name.DIRECTORY_SEPARATOR.$template_file_name_mail_body_info);
 	
 	$imagePathListHtml = "<ul style='list-style-type: none;width: 500px;'>";
-	foreach( $_POST['imagePathList'] as  $imagePathListEl){
+	foreach( $imagePathList as  $imagePathListEl){
     	$imagePathListHtml .= '<li style="padding: 10px;overflow: auto;" >';
     	$imagePathListHtml .= '<img style="float: left;margin: 0 15px 0 0;" src="'.$_SERVER['HTTP_REFERER'].$imagePathListEl['path'].'" height="60" width="60" alt="'.$imagePathListEl['imagetitle'].'" />';
     	$imagePathListHtml .= '<h3 style="font: 15px/1.5 Helvetica, Verdana, sans-serif;margin-top: 3px;padding:0px" >ALBUM: '.$imagePathListEl['album'].'</h3>';
@@ -113,8 +117,8 @@
 	$placeholders = array(
 	      'name'=> $_POST['name'],
 	      'email'=>$_POST['email'],
-	      'imagePathList'=> $_POST['imagePathList'],
-	      'tot_photo'=>count($_POST['imagePathList']),
+	      'imagePathList'=> $imagePathList,
+	      'tot_photo'=>count($imagePathList),
 	      'insertDate'=>date("Y-m-d H:i:s"),
 	      'imagePathListHtml'=> $imagePathListHtml,
 	      'receivername'=>$config_ini_array["receiver_name"]
