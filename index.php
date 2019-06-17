@@ -29,8 +29,8 @@ $config_ini_array = parse_ini_file("config.ini");
     
 
    <!-- nanogallery https://nanogallery2.nanostudio.org -->
-    <link href="https://unpkg.com/nanogallery2/dist/css/nanogallery2.min.css" rel="stylesheet" type="text/css">
-    <script type="text/javascript" src="https://unpkg.com/nanogallery2@2.2.0/dist/jquery.nanogallery2.min.js"></script>
+    <link href="//unpkg.com/nanogallery2/dist/css/nanogallery2.min.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="//unpkg.com/nanogallery2@2.4.2/dist/jquery.nanogallery2.min.js"></script>
     
     <!-- lightbox https://github.com/noelboss/featherlight/ -->
     <link href="//cdn.rawgit.com/noelboss/featherlight/1.7.13/release/featherlight.min.css" type="text/css" rel="stylesheet" />
